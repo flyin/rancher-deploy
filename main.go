@@ -33,7 +33,7 @@ func init() {
 	flag.StringVar(&service, "service", "", "Service name")
 	flag.StringVar(&rancherURL, "rancher-url", "", "Rancher url")
 	flag.StringVar(&dockerImage, "docker-image", "", "Docker image")
-	flag.DurationVar(&upgradeTimeout, "upgrade-timeout", 60, "Upgrade timeout (in seconds)")
+	flag.DurationVar(&upgradeTimeout, "upgrade-timeout", time.Second*60, "Upgrade timeout (in seconds)")
 }
 
 func main() {
@@ -137,7 +137,7 @@ func (d *Deploy) WaitUpgrade(serviceId string) (*rancher.Service, error) {
 
 	ticker := time.NewTicker(time.Second * 3)
 	defer ticker.Stop()
-	ctx, _ := context.WithTimeout(context.Background(), time.Second*upgradeTimeout)
+	ctx, _ := context.WithTimeout(context.Background(), upgradeTimeout)
 
 	for {
 		select {

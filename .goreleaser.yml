@@ -1,0 +1,22 @@
+builds:
+  -
+    binary: rancher-deploy
+    goos:
+      - windows
+      - darwin
+      - linux
+    goarch:
+      - amd64
+    env:
+      - CGO_ENABLED=0
+    hooks:
+      pre: vgo vendor
+
+archive:
+  format: tar.gz
+  format_overrides:
+    - goos: windows
+      format: zip
+
+sign:
+   artifacts: checksum

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
+# Inspired by https://raw.githubusercontent.com/goreleaser/get/master/get
 
 set -e
 
-RELEASES_URL="https://github.com/flyin/rancher-deploy/releases"
 TAR_FILE="/tmp/rancher-deploy.tar.gz"
+RELEASES_URL="https://github.com/flyin/rancher-deploy/releases"
 test -z "$TMPDIR" && TMPDIR="$(mktemp -d)"
 
 last_version() {
@@ -22,8 +23,7 @@ download() {
   }
 
   rm -f "$TAR_FILE"
-
-  curl -s -L -o "$TAR_FILE" "$RELEASES_URL/download/$VERSION/rancher-deploy_$(uname -s)_$(uname -m).tar.gz"
+  curl -s -L -o "$TAR_FILE" "$RELEASES_URL/download/$VERSION/rancher-deploy_${VERSION//[v]/}_$(uname -s)_$(uname -m).tar.gz"
 }
 
 download
